@@ -51,7 +51,7 @@ func RunQuery(name string, part string, query map[string]interface{},
 	)
 	// Make sure all info is present on the query object
 
-	for _, op := range []string{"operationName", "query", "variables"} {
+	for _, op := range []string{KeyOperationName, KeyQuery, KeyVariables} {
 		if _, ok := query[op]; !ok {
 			return nil, fmt.Errorf("Mandatory field '%s' missing from query object", op)
 		}
