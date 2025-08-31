@@ -20,7 +20,7 @@ FishDB is a lightweight, embeddable, and distributed graph database written in G
 
 ### Prerequisites
 
-*   [Go](https://golang.org/doc/install) (version 1.25.0 or later)
+*   [Go](https://golang.org/doc/install) (version 1.12 or later)
 
 ### Building from Source
 
