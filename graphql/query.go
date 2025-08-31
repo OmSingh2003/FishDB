@@ -25,7 +25,7 @@ import (
 
 	"github.com/Fisch-Labs/FishDB/graph"
 	"github.com/Fisch-Labs/FishDB/graphql/interpreter"
-	"github.com/Fisch-Labs/common/lang/graphql/parser"
+	"github.com/Fisch-Labs/Toolkit/lang/graphql/parser"
 )
 
 /*
@@ -44,7 +44,11 @@ func RunQuery(name string, part string, query map[string]interface{},
 
 	var ok bool
 	var vars map[string]interface{}
-
+	const (
+		KeyOperationName = "operationName"
+		KeyQuery         = "query"
+		KeyVariables     = "variables"
+	)
 	// Make sure all info is present on the query object
 
 	for _, op := range []string{"operationName", "query", "variables"} {
@@ -74,18 +78,18 @@ func RunQuery(name string, part string, query map[string]interface{},
 	// Parse the query and annotate the AST with runtime components
 
 	ast, err := parser.ParseWithRuntime(name, fmt.Sprint(query["query"]), rtp)
-
-	if err == nil {
-
-		if err = ast.Runtime.Validate(); err == nil {
-
-			// Evaluate the query
-
-			return ast.Runtime.Eval()
-		}
+	if err != nil {
+		return nil, fmt.Errorf("failed to prepare GraphQL query :%w", err)
 	}
-
-	return nil, err
+	err = ast.Runtime.Validate()
+	if err != nil {
+		return nil, fmt.Errorf("GraphQL query validation failed :%w", err)
+	}
+	result, err := ast.Runtime.Eval()
+	if err != nil {
+		return nil, fmt.Errorf("failed to evaluate GraphQL query : %w", err)
+	}
+	return result, nil
 }
 
 /*
