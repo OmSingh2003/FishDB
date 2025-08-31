@@ -17,3 +17,4 @@
 /examples/data-mining/docker-images/frontend/app/node_modules
 /examples/data-mining/docker-images/frontend/app/graphiql
 external_deps/
+.DS_Store
