@@ -1,83 +1,106 @@
-# FishDB
 
-FishDB is a lightweight, embeddable, and distributed graph database written in Go, designed for high-performance Retrieval-Augmented Generation (RAG) applications. It aims to be the fastest graph-naive versioned database, offering a powerful way to store, query, and manage evolving graph data.
 
-## Features
+<p align="center">
+    <img src="fish.png" alt="FishDB Logo" width="120"/>
+</p>
 
-*   **Graph-based Data Model:** Store data as nodes and edges, perfect for representing complex relationships and supporting versioning.
-*   **High Performance for RAG:** Optimized for rapid data retrieval and augmentation in AI applications.
-*   **Naive Versioning:** Efficiently manage and query different versions of your graph data.
-*   **Multiple Access Methods:**
-    *   RESTful API
-    *   GraphQL API (including subscriptions)
-*   **Clustering Support:** Distribute your data across multiple nodes for scalability and high availability.
-*   **Flexible Storage:**
-    *   In-memory storage for high performance.
-    *   Disk-based storage for persistence.
-*   **Interactive Console:** An interactive command-line console for managing and querying the database.
+<h1 align="center">FishDB</h1>
+<p align="center">
+     Under Development · Lightweight, Embeddable, and Distributed Graph Database for AI
+</p>
 
-## Getting Started
+---
 
-### Prerequisites
+## Overview  
 
-*   [Go](https://golang.org/doc/install) (version 1.12 or later)
+**FishDB** is a lightweight, embeddable, and distributed **graph database** written in Go, designed for high-performance **Retrieval-Augmented Generation (RAG)** applications.  
+It aims to be the **fastest graph-naïve versioned database**, offering a powerful way to store, query, and manage evolving graph data.  
 
-### Building from Source
+---
 
-1.  **Clone the repository:**
-    ```sh
-    git clone https://github.com/Fisch-Labs/FishDB.git
-    cd FishDB
-    ```
+## Features  
 
-2.  **Tidy up the dependencies:**
-    ```sh
-    go mod tidy
-    ```
+- **Graph-based Data Model** – Store data as nodes and edges, with built-in versioning support.  
+- **RAG-Optimized Performance** – Ultra-fast retrieval for AI & LLM-powered applications.  
+- **Naive Versioning** – Efficiently manage and query multiple versions of graph data.  
+- **Multiple Access Methods**  
+    - RESTful API  
+    - GraphQL API (with subscriptions)  
+- **Clustering & Distribution** – Scale horizontally with multi-node clusters.  
+- **Flexible Storage**  
+    - In-memory mode for blazing speed  
+    - Disk-based mode for persistence  
+- **Interactive CLI Console** – Manage and query the database directly from the terminal.  
 
-3.  **Build the binary:**
-    ```sh
-    go build ./cli/fishdb.go
-    ```
+---
 
-### Running FishDB
+## Getting Started  
 
-You can start the FishDB server using the compiled binary:
+### Prerequisites  
+- [Go](https://golang.org/doc/install) **1.12+**
 
-```sh
+### Build from Source  
+
+```bash
+# Clone repository
+git clone https://github.com/Fisch-Labs/FishDB.git
+cd FishDB
+
+# Tidy dependencies
+go mod tidy
+
+# Build binary
+go build ./cli/fishdb.go
+```
+
+### Run FishDB
+
+**Disk-based storage**
+
+```bash
 ./fishdb -db-path /path/to/your/db
 ```
 
-This will start the server with a disk-based storage backend at the specified path. For an in-memory database, you can use:
+**In-memory mode**
 
-```sh
+```bash
 ./fishdb -mem
 ```
+
+---
 
 ## Usage
 
 ### REST API
 
-The REST API provides endpoints for interacting with the database. You can find the available endpoints in the `api/v1` directory.
+Endpoints are available in the `api/v1` directory.
 
 ### GraphQL
 
-FishDB supports GraphQL for querying and mutations. The GraphQL endpoint is typically available at `/graphql`.
+Query and mutate graph data via `/graphql`.
 
 ### Interactive Console
 
-You can launch the interactive console by running:
-
-```sh
+```bash
 ./fishdb -i
 ```
 
-From the console, you can manage users, and interact with the database directly.
+Manage users, run queries, and explore FishDB interactively.
+
+---
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue.
+Contributions are welcome!
+- Open an issue to discuss new ideas or report bugs.
+- Submit PRs for fixes or new features.
+
+---
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+FishDB is licensed under the MIT License.
+
+---
+
+Go version, MIT license, “PRs Welcome”
