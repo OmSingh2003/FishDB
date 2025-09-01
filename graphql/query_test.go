@@ -26,10 +26,7 @@ func TestErrorCases(t *testing.T) {
 	}
 
 	_, err := RunQuery("test", "main", query, gm, nil, false)
-	if err == nil || err.Error() != "Mandatory field 'query' missing from query object" {
-		t.Error("Unexpected result:", err)
-		return
-	}
+	assetError(t, err, "Mandatory field 'query' missing from query object")
 
 	query = map[string]interface{}{
 		"query":     nil,
@@ -37,10 +34,7 @@ func TestErrorCases(t *testing.T) {
 	}
 
 	_, err = RunQuery("test", "main", query, gm, nil, false)
-	if err == nil || err.Error() != "Mandatory field 'operationName' missing from query object" {
-		t.Error("Unexpected result:", err)
-		return
-	}
+	assetError(t, err, "Mandatory field 'operationName' missing from query object")
 
 	query = map[string]interface{}{
 		"operationName": "foo",
@@ -363,7 +357,11 @@ func checkResult(expectedResult string, query map[string]interface{}, gm *graph.
 
 	return err
 }
-
+func assetError(t *testing.T, err error, expectedErrMsg string) {
+	if err == nil || err.Error() != expectedErrMsg {
+		t.Errorf("unexpected result:\nExpected error:%q\nActual error:%q", expectedErrMsg, err)
+	}
+}
 func songGraph() (*graph.Manager, *graphstorage.MemoryGraphStorage) {
 
 	mgs := graphstorage.NewMemoryGraphStorage("mystorage")
