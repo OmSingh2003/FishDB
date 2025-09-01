@@ -102,5 +102,3 @@ Contributions are welcome!
 FishDB is licensed under the MIT License.
 
 ---
-
-Go version, MIT license, “PRs Welcome”
