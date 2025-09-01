@@ -47,7 +47,7 @@ var testEndpointMap = map[string]RestEndpointInst{
 }
 
 func TestEndpointHandling(t *testing.T) {
-
+	// --- Setup: Start test server and register endpoints ---
 	hs, wg := startServer()
 	if hs == nil {
 		return
@@ -57,65 +57,56 @@ func TestEndpointHandling(t *testing.T) {
 	}()
 
 	queryURL := "http://localhost" + TESTPORT
-
 	RegisterRestEndpoints(testEndpointMap)
 	RegisterRestEndpoints(GeneralEndpointMap)
 
+	// --- Test: Resource path parsing ---
 	lastRes = nil
-
 	if res := sendTestRequest(queryURL, "GET", nil); res != "Method Not Allowed" {
 		t.Error("Unexpected response:", res)
 		return
 	}
-
 	if lastRes != nil {
 		t.Error("Unexpected lastRes:", lastRes)
 	}
 
 	lastRes = nil
-
 	if res := sendTestRequest(queryURL+"/foo/bar", "GET", nil); res != "Method Not Allowed" {
 		t.Error("Unexpected response:", res)
 		return
 	}
-
 	if fmt.Sprint(lastRes) != "[foo bar]" {
 		t.Error("Unexpected lastRes:", lastRes)
 	}
 
 	lastRes = nil
-
 	if res := sendTestRequest(queryURL+"/foo/bar/", "GET", nil); res != "Method Not Allowed" {
 		t.Error("Unexpected response:", res)
 		return
 	}
-
 	if fmt.Sprint(lastRes) != "[foo bar]" {
 		t.Error("Unexpected lastRes:", lastRes)
 	}
 
+	// --- Test: Unhandled HTTP methods should be rejected ---
 	if res := sendTestRequest(queryURL, "POST", nil); res != "Method Not Allowed" {
 		t.Error("Unexpected response:", res)
 		return
 	}
-
 	if res := sendTestRequest(queryURL, "PUT", nil); res != "Method Not Allowed" {
 		t.Error("Unexpected response:", res)
 		return
 	}
-
 	if res := sendTestRequest(queryURL, "DELETE", nil); res != "Method Not Allowed" {
 		t.Error("Unexpected response:", res)
 		return
 	}
-
 	if res := sendTestRequest(queryURL, "UPDATE", nil); res != "Method Not Allowed" {
 		t.Error("Unexpected response:", res)
 		return
 	}
 
-	// Test about endpoints
-
+	// --- Test: /db/about endpoint should return correct JSON ---
 	if res := sendTestRequest(queryURL+"/db/about", "GET", nil); res != fmt.Sprintf(`
 {
   "api_versions": [
@@ -128,6 +119,7 @@ func TestEndpointHandling(t *testing.T) {
 		return
 	}
 
+	// --- Test: /db/swagger.json endpoint should return correct JSON ---
 	if res := sendTestRequest(queryURL+"/db/swagger.json", "GET", nil); res != `
 {
   "basePath": "/db",
@@ -200,6 +192,8 @@ func TestEndpointHandling(t *testing.T) {
 	}
 }
 
+// --- Test Helper Functions ---
+
 /*
 Send a request to a HTTP test server
 */
@@ -232,13 +226,11 @@ func sendTestRequestResponse(url string, method string, content []byte) (string,
 	if err != nil {
 		panic(err)
 	}
-	defer resp.Body.Close()
-
+	defer resp.Body.Close.
 	body, _ := ioutil.ReadAll(resp.Body)
 	bodyStr := strings.Trim(string(body), " \n")
 
 	// Try json decoding first
-
 	out := bytes.Buffer{}
 	err = json.Indent(&out, []byte(bodyStr), "", "  ")
 	if err == nil {
@@ -246,7 +238,6 @@ func sendTestRequestResponse(url string, method string, content []byte) (string,
 	}
 
 	// Just return the body
-
 	return bodyStr, resp
 }
 
@@ -264,7 +255,6 @@ func startServer() (*httputil.HTTPServer, *sync.WaitGroup) {
 	wg.Wait()
 
 	// Server is started
-
 	if hs.LastError != nil {
 		panic(hs.LastError)
 	}
@@ -276,19 +266,14 @@ func startServer() (*httputil.HTTPServer, *sync.WaitGroup) {
 Stop a started HTTP test server.
 */
 func stopServer(hs *httputil.HTTPServer, wg *sync.WaitGroup) {
-
 	if hs.Running == true {
-
 		wg.Add(1)
 
 		// Server is shut down
-
 		hs.Shutdown()
 
 		wg.Wait()
-
 	} else {
-
 		panic("Server was not running as expected")
 	}
 }
