@@ -26,7 +26,7 @@ func TestErrorCases(t *testing.T) {
 	}
 
 	_, err := RunQuery("test", "main", query, gm, nil, false)
-	assetError(t, err, "Mandatory field 'query' missing from query object")
+	assertError(t, err, "Mandatory field 'query' missing from query object")
 
 	query = map[string]interface{}{
 		"query":     nil,
@@ -34,7 +34,7 @@ func TestErrorCases(t *testing.T) {
 	}
 
 	_, err = RunQuery("test", "main", query, gm, nil, false)
-	assetError(t, err, "Mandatory field 'operationName' missing from query object")
+	assertError(t, err, "Mandatory field 'operationName' missing from query object")
 
 	query = map[string]interface{}{
 		"operationName": "foo",
@@ -42,10 +42,7 @@ func TestErrorCases(t *testing.T) {
 	}
 
 	_, err = RunQuery("test", "main", query, gm, nil, false)
-	if err == nil || err.Error() != "Mandatory field 'variables' missing from query object" {
-		t.Error("Unexpected result:", err)
-		return
-	}
+	assertError(t, err, "Mandatory field 'variables' missing from query object")
 
 }
 
@@ -357,7 +354,7 @@ func checkResult(expectedResult string, query map[string]interface{}, gm *graph.
 
 	return err
 }
-func assetError(t *testing.T, err error, expectedErrMsg string) {
+func assertError(t *testing.T, err error, expectedErrMsg string) {
 	if err == nil || err.Error() != expectedErrMsg {
 		t.Errorf("unexpected result:\nExpected error:%q\nActual error:%q", expectedErrMsg, err)
 	}
