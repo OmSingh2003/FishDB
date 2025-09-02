@@ -13,8 +13,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Fisch-Labs/common/fileutil"
-	"github.com/Fisch-Labs/common/testutil"
+	"github.com/Fisch-Labs/Toolkit/fileutil"
+	"github.com/Fisch-Labs/Toolkit/testutil"
 )
 
 /*

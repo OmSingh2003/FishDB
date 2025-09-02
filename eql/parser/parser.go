@@ -11,7 +11,7 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/Fisch-Labs/common/stringutil"
+	"github.com/Fisch-Labs/Toolkit/stringutil"
 )
 
 // AST Nodes

@@ -17,9 +17,9 @@ import (
 
 	"github.com/Fisch-Labs/FishDB/api"
 	"github.com/Fisch-Labs/FishDB/ecal/dbfunc"
-	"github.com/Fisch-Labs/ecal/engine"
-	"github.com/Fisch-Labs/ecal/scope"
-	"github.com/Fisch-Labs/ecal/util"
+	"github.com/Fisch-Labs/Tide/engine"
+	"github.com/Fisch-Labs/Tide/scope"
+	"github.com/Fisch-Labs/Tide/util"
 )
 
 /*

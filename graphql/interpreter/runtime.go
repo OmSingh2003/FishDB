@@ -11,8 +11,8 @@ import (
 	"fmt"
 
 	"github.com/Fisch-Labs/FishDB/graph"
-	"github.com/Fisch-Labs/common/errorutil"
-	"github.com/Fisch-Labs/common/lang/graphql/parser"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
+	"github.com/Fisch-Labs/Toolkit/lang/graphql/parser"
 )
 
 // Runtime definition

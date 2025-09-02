@@ -11,7 +11,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/Fisch-Labs/common/httputil/user"
+	"github.com/Fisch-Labs/Toolkit/httputil/user"
 )
 
 func TestLogoutEndpoint(t *testing.T) {

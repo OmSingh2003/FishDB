@@ -13,7 +13,7 @@ import (
 	"fmt"
 
 	"github.com/Fisch-Labs/FishDB/storage"
-	"github.com/Fisch-Labs/common/errorutil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
 )
 
 /*

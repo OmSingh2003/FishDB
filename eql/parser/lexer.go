@@ -14,7 +14,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/Fisch-Labs/common/stringutil"
+	"github.com/Fisch-Labs/Toolkit/stringutil"
 )
 
 /*

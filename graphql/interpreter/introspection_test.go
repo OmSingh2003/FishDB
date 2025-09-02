@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/Fisch-Labs/common/lang/graphql/parser"
+	"github.com/Fisch-Labs/Toolkit/lang/graphql/parser"
 )
 
 func TestIntrospection(t *testing.T) {

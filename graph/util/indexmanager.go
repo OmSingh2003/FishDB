@@ -18,9 +18,9 @@ import (
 	"unicode"
 
 	"github.com/Fisch-Labs/FishDB/hash"
-	"github.com/Fisch-Labs/common/bitutil"
-	"github.com/Fisch-Labs/common/sortutil"
-	"github.com/Fisch-Labs/common/stringutil"
+	"github.com/Fisch-Labs/Toolkit/bitutil"
+	"github.com/Fisch-Labs/Toolkit/sortutil"
+	"github.com/Fisch-Labs/Toolkit/stringutil"
 )
 
 /*

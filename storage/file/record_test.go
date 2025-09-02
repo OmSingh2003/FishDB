@@ -14,8 +14,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Fisch-Labs/common/bitutil"
-	"github.com/Fisch-Labs/common/testutil"
+	"github.com/Fisch-Labs/Toolkit/bitutil"
+	"github.com/Fisch-Labs/Toolkit/testutil"
 )
 
 func TestRecordInitialisation(t *testing.T) {

@@ -15,7 +15,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Fisch-Labs/common/datautil"
+	"github.com/Fisch-Labs/Toolkit/datautil"
 )
 
 const invalidFileName = "**" + "\x00"

@@ -11,7 +11,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Fisch-Labs/common/pools"
+	"github.com/Fisch-Labs/Toolkit/pools"
 )
 
 /*

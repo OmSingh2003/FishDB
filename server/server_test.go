@@ -27,8 +27,8 @@ import (
 	"github.com/Fisch-Labs/FishDB/config"
 	"github.com/Fisch-Labs/FishDB/graph"
 	"github.com/Fisch-Labs/FishDB/graph/graphstorage"
-	"github.com/Fisch-Labs/common/fileutil"
-	"github.com/Fisch-Labs/common/httputil"
+	"github.com/Fisch-Labs/Toolkit/fileutil"
+	"github.com/Fisch-Labs/Toolkit/httputil"
 )
 
 /*

@@ -20,12 +20,12 @@ import (
 	"testing"
 
 	"github.com/Fisch-Labs/FishDB/api"
-	"github.com/Fisch-Labs/common/datautil"
-	"github.com/Fisch-Labs/common/errorutil"
-	"github.com/Fisch-Labs/common/httputil"
-	"github.com/Fisch-Labs/common/httputil/access"
-	"github.com/Fisch-Labs/common/httputil/auth"
-	"github.com/Fisch-Labs/common/stringutil"
+	"github.com/Fisch-Labs/Toolkit/datautil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
+	"github.com/Fisch-Labs/Toolkit/httputil"
+	"github.com/Fisch-Labs/Toolkit/httputil/access"
+	"github.com/Fisch-Labs/Toolkit/httputil/auth"
+	"github.com/Fisch-Labs/Toolkit/stringutil"
 )
 
 const TESTPORT = ":9090"

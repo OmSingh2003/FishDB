@@ -51,9 +51,9 @@ import (
 	"github.com/Fisch-Labs/FishDB/console"
 	"github.com/Fisch-Labs/FishDB/graph"
 	"github.com/Fisch-Labs/FishDB/server"
-	"github.com/Fisch-Labs/common/errorutil"
-	"github.com/Fisch-Labs/common/fileutil"
-	"github.com/Fisch-Labs/common/termutil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
+	"github.com/Fisch-Labs/Toolkit/fileutil"
+	"github.com/Fisch-Labs/Toolkit/termutil"
 )
 
 func main() {

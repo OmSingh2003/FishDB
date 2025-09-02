@@ -12,7 +12,7 @@ import (
 	"fmt"
 
 	v1 "github.com/Fisch-Labs/FishDB/api/v1"
-	"github.com/Fisch-Labs/common/errorutil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
 )
 
 // GraphQL Console

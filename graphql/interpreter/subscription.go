@@ -15,8 +15,8 @@ import (
 
 	"github.com/Fisch-Labs/FishDB/graph"
 	"github.com/Fisch-Labs/FishDB/graph/data"
-	"github.com/Fisch-Labs/common/cryptutil"
-	"github.com/Fisch-Labs/common/errorutil"
+	"github.com/Fisch-Labs/Toolkit/cryptutil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
 )
 
 /*

@@ -12,7 +12,7 @@ import (
 	"fmt"
 	"net/rpc"
 
-	"github.com/Fisch-Labs/common/errorutil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
 )
 
 func init() {

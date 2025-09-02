@@ -12,7 +12,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/Fisch-Labs/common/errorutil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
 )
 
 func TestGraphQLQuery(t *testing.T) {

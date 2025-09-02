@@ -19,8 +19,8 @@ import (
 
 	"github.com/Fisch-Labs/FishDB/eql/parser"
 	"github.com/Fisch-Labs/FishDB/graph/data"
-	"github.com/Fisch-Labs/common/datautil"
-	"github.com/Fisch-Labs/common/errorutil"
+	"github.com/Fisch-Labs/Toolkit/datautil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
 )
 
 // Where related functions

@@ -11,7 +11,7 @@ import (
 	"net/http"
 
 	"github.com/Fisch-Labs/FishDB/api"
-	"github.com/Fisch-Labs/common/httputil/user"
+	"github.com/Fisch-Labs/Toolkit/httputil/user"
 )
 
 /*

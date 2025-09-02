@@ -11,9 +11,9 @@ import (
 	"fmt"
 
 	"github.com/Fisch-Labs/FishDB/graph"
-	"github.com/Fisch-Labs/ecal/interpreter"
-	"github.com/Fisch-Labs/ecal/parser"
-	"github.com/Fisch-Labs/ecal/util"
+	"github.com/Fisch-Labs/Tide/interpreter"
+	"github.com/Fisch-Labs/Tide/parser"
+	"github.com/Fisch-Labs/Tide/util"
 )
 
 /*
