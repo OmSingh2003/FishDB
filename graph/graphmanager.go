@@ -187,14 +187,11 @@ func (gm *Manager) mainStringList(name string) []string {
 	return ret
 }
 
-/*
-IsValidAttr checks if a given string can be a valid node attribute.
+/* 
+IsValidAttr checks if a string is a valid node attribute. An attribute is considered valid if it is a reserved system keyword 
+or if it can be successfully encoded by the names manager.
 */
 func (gm *Manager) IsValidAttr(attr string) bool {
-	return gm.nm.Encode32(attr, false) != "" ||
-		attr == data.NodeKey || attr == data.NodeKind ||
-		attr == data.EdgeEnd1Key || attr == data.EdgeEnd1Kind ||
-		attr == data.EdgeEnd1Role || attr == data.EdgeEnd1Cascading ||
-		attr == data.EdgeEnd2Key || attr == data.EdgeEnd2Kind ||
-		attr == data.EdgeEnd2Role || attr == data.EdgeEnd2Cascading
+	_, isReserved := reservedAttrs[attr]
+	return isReserved || gm.nm.Encode32(attr, false) != ""
 }
