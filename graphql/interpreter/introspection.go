@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Fisch-Labs/common/lang/graphql/parser"
+	"github.com/Fisch-Labs/Toolkit/lang/graphql/parser"
 )
 
 /*
@@ -167,117 +167,17 @@ func (rt *selectionSetRuntime) GetFieldTypesIntrospection(action string, lookupA
 
 	if lookupArgs {
 		args = []interface{}{
-
-			map[string]interface{}{
-				"name":         "key",
-				"defaultValue": nil,
-				"description":  "Lookup a particular node by key.",
-				"type": map[string]interface{}{
-					"kind":   "SCALAR",
-					"name":   "String",
-					"ofType": nil,
-				},
-			},
-			map[string]interface{}{
-				"name":         "matches",
-				"defaultValue": nil,
-				"description":  "Lookup nodes matching this template.",
-				"type": map[string]interface{}{
-					"kind":   "OBJECT",
-					"name":   "NodeTemplate",
-					"ofType": nil,
-				},
-			},
-			map[string]interface{}{
-				"name":         "storeNode",
-				"defaultValue": nil,
-				"description":  "Store a node according to this template.",
-				"type": map[string]interface{}{
-					"kind":   "OBJECT",
-					"name":   "NodeTemplate",
-					"ofType": nil,
-				},
-			},
-			map[string]interface{}{
-				"name":         "removeNode",
-				"defaultValue": nil,
-				"description":  "Remove a node according to this template (only kind is needed).",
-				"type": map[string]interface{}{
-					"kind":   "OBJECT",
-					"name":   "NodeTemplate",
-					"ofType": nil,
-				},
-			},
-			map[string]interface{}{
-				"name":         "storeEdge",
-				"defaultValue": nil,
-				"description":  "Store an edge according to this template.",
-				"type": map[string]interface{}{
-					"kind":   "OBJECT",
-					"name":   "NodeTemplate",
-					"ofType": nil,
-				},
-			},
-			map[string]interface{}{
-				"name":         "removeEdge",
-				"defaultValue": nil,
-				"description":  "Remove an edge according to this template (only key and kind are needed).",
-				"type": map[string]interface{}{
-					"kind":   "OBJECT",
-					"name":   "NodeTemplate",
-					"ofType": nil,
-				},
-			},
-			map[string]interface{}{
-				"name":         "ascending",
-				"defaultValue": nil,
-				"description":  "Sort resuting data ascending using the values of the specified key.",
-				"type": map[string]interface{}{
-					"kind":   "SCALAR",
-					"name":   "String",
-					"ofType": nil,
-				},
-			},
-			map[string]interface{}{
-				"name":         "descending",
-				"defaultValue": nil,
-				"description":  "Sort resuting data descending using the values of the specified key.",
-				"type": map[string]interface{}{
-					"kind":   "SCALAR",
-					"name":   "String",
-					"ofType": nil,
-				},
-			},
-			map[string]interface{}{
-				"name":         "from",
-				"defaultValue": nil,
-				"description":  "Retrieve data after the first n entries.",
-				"type": map[string]interface{}{
-					"kind":   "SCALAR",
-					"name":   "Int",
-					"ofType": nil,
-				},
-			},
-			map[string]interface{}{
-				"name":         "items",
-				"defaultValue": nil,
-				"description":  "Retrieve n entries.",
-				"type": map[string]interface{}{
-					"kind":   "SCALAR",
-					"name":   "Int",
-					"ofType": nil,
-				},
-			},
-			map[string]interface{}{
-				"name":         "last",
-				"defaultValue": nil,
-				"description":  "Only return last n entries.",
-				"type": map[string]interface{}{
-					"kind":   "SCALAR",
-					"name":   "Int",
-					"ofType": nil,
-				},
-			},
+			rt.newArg("key", "Lookup a particular node by key.", rt.newType("SCALAR", "String", nil), nil),
+			rt.newArg("matches", "Lookup nodes matching this template.", rt.newType("OBJECT", "NodeTemplate", nil), nil),
+			rt.newArg("storeNode", "Store a node according to this template.", rt.newType("OBJECT", "NodeTemplate", nil), nil),
+			rt.newArg("removeNode", "Remove a node according to this template (only kind is needed).", rt.newType("OBJECT", "NodeTemplate", nil), nil),
+			rt.newArg("storeEdge", "Store an edge according to this template.", rt.newType("OBJECT", "NodeTemplate", nil), nil),
+			rt.newArg("removeEdge", "Remove an edge according to this template (only key and kind are needed).", rt.newType("OBJECT", "NodeTemplate", nil), nil),
+			rt.newArg("ascending", "Sort resuting data ascending using the values of the specified key.", rt.newType("SCALAR", "String", nil), nil),
+			rt.newArg("descending", "Sort resuting data descending using the values of the specified key.", rt.newType("SCALAR", "String", nil), nil),
+			rt.newArg("from", "Retrieve data after the first n entries.", rt.newType("SCALAR", "Int", nil), nil),
+			rt.newArg("items", "Retrieve n entries.", rt.newType("SCALAR", "Int", nil), nil),
+			rt.newArg("last", "Only return last n entries.", rt.newType("SCALAR", "Int", nil), nil),
 		}
 	} else {
 
@@ -286,25 +186,22 @@ func (rt *selectionSetRuntime) GetFieldTypesIntrospection(action string, lookupA
 
 	for _, kind := range rt.rtp.gm.NodeKinds() {
 
-		res = append(res, map[string]interface{}{
-			"name":        kind,
-			"description": fmt.Sprintf("%s %s nodes in the datastore.", action, kind),
-			"args":        args,
-			"type": map[string]interface{}{
-				"kind": "LIST",
-				"name": nil,
-				"ofType": map[string]interface{}{
-					"kind":   "OBJECT",
-					"name":   fmt.Sprintf("%sNode", strings.Title(kind)),
-					"ofType": nil,
-				},
-			},
-			"isDeprecated":      false,
-			"deprecationReason": nil,
-		})
+		res = append(res, rt.newField(kind, fmt.Sprintf("%s %s nodes in the datastore.", action, kind), args, rt.newType("LIST", nil, rt.newType("OBJECT", fmt.Sprintf("%sNode", strings.Title(kind)), nil))))
 	}
 
 	return res
+}
+
+/*
+newArg is a helper for creating an argument object in the introspection response.
+*/
+func (rt *selectionSetRuntime) newArg(name string, description string, typeValue interface{}, defaultValue interface{}) map[string]interface{} {
+	return map[string]interface{}{
+		"name":         name,
+		"description":  description,
+		"type":         typeValue,
+		"defaultValue": defaultValue,
+	}
 }
 
 /*
@@ -319,115 +216,22 @@ func (rt *selectionSetRuntime) GetFishDBTypesIntrospection() interface{} {
 
 		for _, attr := range rt.rtp.gm.NodeAttrs(kind) {
 
-			fields = append(fields, map[string]interface{}{
-				"name":        attr,
-				"description": fmt.Sprintf("The %s attribute of a %s node.", attr, kind),
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind":   "SCALAR",
-					"name":   "String",
-					"ofType": nil,
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			})
+			fields = append(fields, rt.newField(attr, fmt.Sprintf("The %s attribute of a %s node.", attr, kind), []interface{}{}, rt.newType("SCALAR", "String", nil)))
 		}
 
 		for _, edge := range rt.rtp.gm.NodeEdges(kind) {
 			edgeName := strings.Replace(edge, ":", "_", -1)
 			edgeTargetKind := strings.Split(edge, ":")[3]
 
-			fields = append(fields, map[string]interface{}{
-				"name":        edgeName,
-				"description": fmt.Sprintf("The %s edge of a %s node to a %s node.", edge, kind, edgeTargetKind),
-				"args": []interface{}{
-					map[string]interface{}{
-						"name":         "traverse",
-						"defaultValue": nil,
-						"description":  fmt.Sprintf("Use %s to traverse from %s to %s.", edge, kind, edgeTargetKind),
-						"type": map[string]interface{}{
-							"kind": "NON_NULL",
-							"name": nil,
-							"ofType": map[string]interface{}{
-								"kind":   "SCALAR",
-								"name":   "String",
-								"ofType": nil,
-							},
-						},
-					},
-					map[string]interface{}{
-						"name":         "matches",
-						"defaultValue": nil,
-						"description":  "Lookup nodes matching this template.",
-						"type": map[string]interface{}{
-							"kind":   "OBJECT",
-							"name":   "NodeTemplate",
-							"ofType": nil,
-						},
-					},
-					map[string]interface{}{
-						"name":         "ascending",
-						"defaultValue": nil,
-						"description":  "Sort resuting data ascending using the values of the specified key.",
-						"type": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "String",
-							"ofType": nil,
-						},
-					},
-					map[string]interface{}{
-						"name":         "descending",
-						"defaultValue": nil,
-						"description":  "Sort resuting data descending using the values of the specified key.",
-						"type": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "String",
-							"ofType": nil,
-						},
-					},
-					map[string]interface{}{
-						"name":         "from",
-						"defaultValue": nil,
-						"description":  "Retrieve data after the first n entries.",
-						"type": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "Int",
-							"ofType": nil,
-						},
-					},
-					map[string]interface{}{
-						"name":         "items",
-						"defaultValue": nil,
-						"description":  "Retrieve n entries.",
-						"type": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "Int",
-							"ofType": nil,
-						},
-					},
-					map[string]interface{}{
-						"name":         "last",
-						"defaultValue": nil,
-						"description":  "Only return last n entries.",
-						"type": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "Int",
-							"ofType": nil,
-						},
-					},
-				},
-				"type": map[string]interface{}{
-					"kind": "LIST",
-					"name": nil,
-					"ofType": map[string]interface{}{
-						"kind":   "OBJECT",
-						"name":   fmt.Sprintf("%sNode", strings.Title(edgeTargetKind)),
-						"ofType": nil,
-					},
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			})
+			fields = append(fields, rt.newField(edgeName, fmt.Sprintf("The %s edge of a %s node to a %s node.", edge, kind, edgeTargetKind), []interface{}{
+				rt.newArg("traverse", fmt.Sprintf("Use %s to traverse from %s to %s.", edge, kind, edgeTargetKind), rt.newType("NON_NULL", nil, rt.newType("SCALAR", "String", nil)), nil),
+				rt.newArg("matches", "Lookup nodes matching this template.", rt.newType("OBJECT", "NodeTemplate", nil), nil),
+				rt.newArg("ascending", "Sort resuting data ascending using the values of the specified key.", rt.newType("SCALAR", "String", nil), nil),
+				rt.newArg("descending", "Sort resuting data descending using the values of the specified key.", rt.newType("SCALAR", "String", nil), nil),
+				rt.newArg("from", "Retrieve data after the first n entries.", rt.newType("SCALAR", "Int", nil), nil),
+				rt.newArg("items", "Retrieve n entries.", rt.newType("SCALAR", "Int", nil), nil),
+				rt.newArg("last", "Only return last n entries.", rt.newType("SCALAR", "Int", nil), nil),
+			}, rt.newType("LIST", nil, rt.newType("OBJECT", fmt.Sprintf("%sNode", strings.Title(edgeTargetKind)), nil))))
 		}
 
 		res = append(res, map[string]interface{}{
@@ -469,94 +273,11 @@ func (rt *selectionSetRuntime) GetStandardTypesIntrospection() interface{} {
 		"name":        "__Schema",
 		"description": "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
 		"fields": []interface{}{
-			map[string]interface{}{
-				"name":        "types",
-				"description": "A list of all types supported by this server.",
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind": "NON_NULL",
-					"name": nil,
-					"ofType": map[string]interface{}{
-						"kind": "LIST",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind": "NON_NULL",
-							"name": nil,
-							"ofType": map[string]interface{}{
-								"kind":   "OBJECT",
-								"name":   "__Type",
-								"ofType": nil,
-							},
-						},
-					},
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "queryType",
-				"description": "The type that query operations will be rooted at.",
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind": "NON_NULL",
-					"name": nil,
-					"ofType": map[string]interface{}{
-						"kind":   "OBJECT",
-						"name":   "__Type",
-						"ofType": nil,
-					},
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "mutationType",
-				"description": "The type that mutation operations will be rooted at.",
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind":   "OBJECT",
-					"name":   "__Type",
-					"ofType": nil,
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "subscriptionType",
-				"description": "The type that subscription operations will be rooted at.",
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind":   "OBJECT",
-					"name":   "__Type",
-					"ofType": nil,
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "directives",
-				"description": "A list of all directives supported by this server.",
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind": "NON_NULL",
-					"name": nil,
-					"ofType": map[string]interface{}{
-						"kind": "LIST",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind": "NON_NULL",
-							"name": nil,
-							"ofType": map[string]interface{}{
-								"kind":   "OBJECT",
-								"name":   "__Directive",
-								"ofType": nil,
-							},
-						},
-					},
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
+			rt.newField("types", "A list of all types supported by this server.", []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("LIST", nil, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__Type", nil))))),
+			rt.newField("queryType", "The type that query operations will be rooted at.", []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__Type", nil))),
+			rt.newField("mutationType", "The type that mutation operations will be rooted at.", []interface{}{}, rt.newType("OBJECT", "__Type", nil)),
+			rt.newField("subscriptionType", "The type that subscription operations will be rooted at.", []interface{}{}, rt.newType("OBJECT", "__Type", nil)),
+			rt.newField("directives", "A list of all directives supported by this server.", []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("LIST", nil, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__Directive", nil))))),
 		},
 		"inputFields":   nil,
 		"interfaces":    []interface{}{},
@@ -571,180 +292,29 @@ func (rt *selectionSetRuntime) GetStandardTypesIntrospection() interface{} {
 		"name":        "__Type",
 		"description": "The fundamental unit of the GraphQL Schema.",
 		"fields": []interface{}{
-			map[string]interface{}{
-				"name":        "kind",
-				"description": nil,
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind": "NON_NULL",
-					"name": nil,
-					"ofType": map[string]interface{}{
-						"kind":   "ENUM",
-						"name":   "__TypeKind",
-						"ofType": nil,
-					},
+			rt.newField("kind", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("ENUM", "__TypeKind", nil))),
+			rt.newField("name", nil, []interface{}{}, rt.newType("SCALAR", "String", nil)),
+			rt.newField("description", nil, []interface{}{}, rt.newType("SCALAR", "String", nil)),
+			rt.newField("fields", nil, []interface{}{
+				map[string]interface{}{
+					"name":         "includeDeprecated",
+					"description":  nil,
+					"type":         rt.newType("SCALAR", "Boolean", nil),
+					"defaultValue": "false",
 				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "name",
-				"description": nil,
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind":   "SCALAR",
-					"name":   "String",
-					"ofType": nil,
+			}, rt.newType("LIST", nil, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__Field", nil)))),
+			rt.newField("interfaces", nil, []interface{}{}, rt.newType("LIST", nil, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__Type", nil)))),
+			rt.newField("possibleTypes", nil, []interface{}{}, rt.newType("LIST", nil, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__Type", nil)))),
+			rt.newField("enumValues", nil, []interface{}{
+				map[string]interface{}{
+					"name":         "includeDeprecated",
+					"description":  nil,
+					"type":         rt.newType("SCALAR", "Boolean", nil),
+					"defaultValue": "false",
 				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "description",
-				"description": nil,
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind":   "SCALAR",
-					"name":   "String",
-					"ofType": nil,
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "fields",
-				"description": nil,
-				"args": []interface{}{
-					map[string]interface{}{
-						"name":        "includeDeprecated",
-						"description": nil,
-						"type": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "Boolean",
-							"ofType": nil,
-						},
-						"defaultValue": "false",
-					},
-				},
-				"type": map[string]interface{}{
-					"kind": "LIST",
-					"name": nil,
-					"ofType": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "OBJECT",
-							"name":   "__Field",
-							"ofType": nil,
-						},
-					},
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "interfaces",
-				"description": nil,
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind": "LIST",
-					"name": nil,
-					"ofType": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "OBJECT",
-							"name":   "__Type",
-							"ofType": nil,
-						},
-					},
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "possibleTypes",
-				"description": nil,
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind": "LIST",
-					"name": nil,
-					"ofType": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "OBJECT",
-							"name":   "__Type",
-							"ofType": nil,
-						},
-					},
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "enumValues",
-				"description": nil,
-				"args": []interface{}{
-					map[string]interface{}{
-						"name":        "includeDeprecated",
-						"description": nil,
-						"type": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "Boolean",
-							"ofType": nil,
-						},
-						"defaultValue": "false",
-					},
-				},
-				"type": map[string]interface{}{
-					"kind": "LIST",
-					"name": nil,
-					"ofType": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "OBJECT",
-							"name":   "__EnumValue",
-							"ofType": nil,
-						},
-					},
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "inputFields",
-				"description": nil,
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind": "LIST",
-					"name": nil,
-					"ofType": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "OBJECT",
-							"name":   "__InputValue",
-							"ofType": nil,
-						},
-					},
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
-			map[string]interface{}{
-				"name":        "ofType",
-				"description": nil,
-				"args":        []interface{}{},
-				"type": map[string]interface{}{
-					"kind":   "OBJECT",
-					"name":   "__Type",
-					"ofType": nil,
-				},
-				"isDeprecated":      false,
-				"deprecationReason": nil,
-			},
+			}, rt.newType("LIST", nil, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__EnumValue", nil)))),
+			rt.newField("inputFields", nil, []interface{}{}, rt.newType("LIST", nil, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__InputValue", nil)))),
+			rt.newField("ofType", nil, []interface{}{}, rt.newType("OBJECT", "__Type", nil)),
 		},
 		"inputFields":   nil,
 		"interfaces":    []interface{}{},
@@ -802,62 +372,10 @@ func (rt *selectionSetRuntime) GetStandardTypesIntrospection() interface{} {
 			"name":        "__InputValue",
 			"description": "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
 			"fields": []interface{}{
-				map[string]interface{}{
-					"name":        "name",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "String",
-							"ofType": nil,
-						},
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "description",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind":   "SCALAR",
-						"name":   "String",
-						"ofType": nil,
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "type",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "OBJECT",
-							"name":   "__Type",
-							"ofType": nil,
-						},
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "defaultValue",
-					"description": "A GraphQL-formatted string representing the default value for this input value.",
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind":   "SCALAR",
-						"name":   "String",
-						"ofType": nil,
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
+				rt.newField("name", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("SCALAR", "String", nil))),
+				rt.newField("description", nil, []interface{}{}, rt.newType("SCALAR", "String", nil)),
+				rt.newField("type", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__Type", nil))),
+				rt.newField("defaultValue", "A GraphQL-formatted string representing the default value for this input value.", []interface{}{}, rt.newType("SCALAR", "String", nil)),
 			},
 			"inputFields":   nil,
 			"interfaces":    []interface{}{},
@@ -869,62 +387,10 @@ func (rt *selectionSetRuntime) GetStandardTypesIntrospection() interface{} {
 			"name":        "__EnumValue",
 			"description": "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. Enum values are returned in a JSON response as strings.",
 			"fields": []interface{}{
-				map[string]interface{}{
-					"name":        "name",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "String",
-							"ofType": nil,
-						},
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "description",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind":   "SCALAR",
-						"name":   "String",
-						"ofType": nil,
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "isDeprecated",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "Boolean",
-							"ofType": nil,
-						},
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "deprecationReason",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind":   "SCALAR",
-						"name":   "String",
-						"ofType": nil,
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
+				rt.newField("name", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("SCALAR", "String", nil))),
+				rt.newField("description", nil, []interface{}{}, rt.newType("SCALAR", "String", nil)),
+				rt.newField("isDeprecated", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("SCALAR", "Boolean", nil))),
+				rt.newField("deprecationReason", nil, []interface{}{}, rt.newType("SCALAR", "String", nil)),
 			},
 			"inputFields":   nil,
 			"interfaces":    []interface{}{},
@@ -995,102 +461,12 @@ func (rt *selectionSetRuntime) GetStandardTypesIntrospection() interface{} {
 			"name":        "__Field",
 			"description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
 			"fields": []interface{}{
-				map[string]interface{}{
-					"name":        "name",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "String",
-							"ofType": nil,
-						},
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "description",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind":   "SCALAR",
-						"name":   "String",
-						"ofType": nil,
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "args",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind": "LIST",
-							"name": nil,
-							"ofType": map[string]interface{}{
-								"kind": "NON_NULL",
-								"name": nil,
-								"ofType": map[string]interface{}{
-									"kind":   "OBJECT",
-									"name":   "__InputValue",
-									"ofType": nil,
-								},
-							},
-						},
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "type",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "OBJECT",
-							"name":   "__Type",
-							"ofType": nil,
-						},
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "isDeprecated",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "Boolean",
-							"ofType": nil,
-						},
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "deprecationReason",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind":   "SCALAR",
-						"name":   "String",
-						"ofType": nil,
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
+				rt.newField("name", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("SCALAR", "String", nil))),
+				rt.newField("description", nil, []interface{}{}, rt.newType("SCALAR", "String", nil)),
+				rt.newField("args", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("LIST", nil, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__InputValue", nil))))),
+				rt.newField("type", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__Type", nil))),
+				rt.newField("isDeprecated", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("SCALAR", "Boolean", nil))),
+				rt.newField("deprecationReason", nil, []interface{}{}, rt.newType("SCALAR", "String", nil)),
 			},
 			"inputFields":   nil,
 			"interfaces":    []interface{}{},
@@ -1103,82 +479,10 @@ func (rt *selectionSetRuntime) GetStandardTypesIntrospection() interface{} {
 			"name":        "__Directive",
 			"description": "A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.",
 			"fields": []interface{}{
-				map[string]interface{}{
-					"name":        "name",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "String",
-							"ofType": nil,
-						},
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "description",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind":   "SCALAR",
-						"name":   "String",
-						"ofType": nil,
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "locations",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind": "LIST",
-							"name": nil,
-							"ofType": map[string]interface{}{
-								"kind": "NON_NULL",
-								"name": nil,
-								"ofType": map[string]interface{}{
-									"kind":   "ENUM",
-									"name":   "__DirectiveLocation",
-									"ofType": nil,
-								},
-							},
-						},
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
-				map[string]interface{}{
-					"name":        "args",
-					"description": nil,
-					"args":        []interface{}{},
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind": "LIST",
-							"name": nil,
-							"ofType": map[string]interface{}{
-								"kind": "NON_NULL",
-								"name": nil,
-								"ofType": map[string]interface{}{
-									"kind":   "OBJECT",
-									"name":   "__InputValue",
-									"ofType": nil,
-								},
-							},
-						},
-					},
-					"isDeprecated":      false,
-					"deprecationReason": nil,
-				},
+				rt.newField("name", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("SCALAR", "String", nil))),
+				rt.newField("description", nil, []interface{}{}, rt.newType("SCALAR", "String", nil)),
+				rt.newField("locations", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("LIST", nil, rt.newType("NON_NULL", nil, rt.newType("ENUM", "__DirectiveLocation", nil))))),
+				rt.newField("args", nil, []interface{}{}, rt.newType("NON_NULL", nil, rt.newType("LIST", nil, rt.newType("NON_NULL", nil, rt.newType("OBJECT", "__InputValue", nil))))),
 			},
 			"inputFields":   nil,
 			"interfaces":    []interface{}{},
@@ -1310,6 +614,20 @@ func (rt *selectionSetRuntime) GetStandardTypesIntrospection() interface{} {
 }
 
 /*
+newField is a helper for creating a __Field object in the introspection response.
+*/
+func (rt *selectionSetRuntime) newField(name string, description interface{}, args []interface{}, typeValue interface{}) map[string]interface{} {
+	return map[string]interface{}{
+		"name":              name,
+		"description":       description,
+		"args":              args,
+		"type":              typeValue,
+		"isDeprecated":      false,
+		"deprecationReason": nil,
+	}
+}
+
+/*
 GetDirectivesIntrospection returns the introspection for all available directives.
 */
 func (rt *selectionSetRuntime) GetDirectivesIntrospection() interface{} {
@@ -1325,17 +643,9 @@ func (rt *selectionSetRuntime) GetDirectivesIntrospection() interface{} {
 			},
 			"args": []interface{}{
 				map[string]interface{}{
-					"name":        "if",
-					"description": "Skipped when true.",
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "Boolean",
-							"ofType": nil,
-						},
-					},
+					"name":         "if",
+					"description":  "Skipped when true.",
+					"type":         rt.newType("NON_NULL", nil, rt.newType("SCALAR", "Boolean", nil)),
 					"defaultValue": nil,
 				},
 			},
@@ -1350,21 +660,24 @@ func (rt *selectionSetRuntime) GetDirectivesIntrospection() interface{} {
 			},
 			"args": []interface{}{
 				map[string]interface{}{
-					"name":        "if",
-					"description": "Included when true.",
-					"type": map[string]interface{}{
-						"kind": "NON_NULL",
-						"name": nil,
-						"ofType": map[string]interface{}{
-							"kind":   "SCALAR",
-							"name":   "Boolean",
-							"ofType": nil,
-						},
-					},
+					"name":         "if",
+					"description":  "Included when true.",
+					"type":         rt.newType("NON_NULL", nil, rt.newType("SCALAR", "Boolean", nil)),
 					"defaultValue": nil,
 				},
 			},
 		},
+	}
+}
+
+/*
+newType is a helper for creating a __Type object in the introspection response.
+*/
+func (rt *selectionSetRuntime) newType(kind string, name interface{}, ofType interface{}) map[string]interface{} {
+	return map[string]interface{}{
+		"kind":   kind,
+		"name":   name,
+		"ofType": ofType,
 	}
 }
 

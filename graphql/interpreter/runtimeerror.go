@@ -13,8 +13,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Fisch-Labs/common/lang/graphql/parser"
-	"github.com/Fisch-Labs/common/stringutil"
+	"github.com/Fisch-Labs/Toolkit/lang/graphql/parser"
+	"github.com/Fisch-Labs/Toolkit/stringutil"
 )
 
 /*

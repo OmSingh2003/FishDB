@@ -17,7 +17,7 @@ import (
 	"github.com/Fisch-Labs/FishDB/graph/data"
 	"github.com/Fisch-Labs/FishDB/hash"
 	"github.com/Fisch-Labs/FishDB/storage"
-	"github.com/Fisch-Labs/common/datautil"
+	"github.com/Fisch-Labs/Toolkit/datautil"
 )
 
 func TestNestedStorage(t *testing.T) {

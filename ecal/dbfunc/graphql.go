@@ -12,8 +12,8 @@ import (
 
 	"github.com/Fisch-Labs/FishDB/graph"
 	"github.com/Fisch-Labs/FishDB/graphql"
-	"github.com/Fisch-Labs/ecal/parser"
-	"github.com/Fisch-Labs/ecal/scope"
+	"github.com/Fisch-Labs/Tide/parser"
+	"github.com/Fisch-Labs/Tide/scope"
 )
 
 /*

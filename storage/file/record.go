@@ -42,8 +42,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/Fisch-Labs/common/bitutil"
-	"github.com/Fisch-Labs/common/stringutil"
+	"github.com/Fisch-Labs/Toolkit/bitutil"
+	"github.com/Fisch-Labs/Toolkit/stringutil"
 )
 
 /*

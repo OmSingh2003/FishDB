@@ -15,9 +15,9 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/Fisch-Labs/common/errorutil"
-	"github.com/Fisch-Labs/common/httputil"
-	"github.com/Fisch-Labs/ecal/engine"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
+	"github.com/Fisch-Labs/Toolkit/httputil"
+	"github.com/Fisch-Labs/Tide/engine"
 	"github.com/gorilla/websocket"
 )
 

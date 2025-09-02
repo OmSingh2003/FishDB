@@ -18,7 +18,7 @@ import (
 	"testing"
 
 	"github.com/Fisch-Labs/FishDB/config"
-	"github.com/Fisch-Labs/common/httputil"
+	"github.com/Fisch-Labs/Toolkit/httputil"
 )
 
 const TESTPORT = ":9090"

@@ -16,10 +16,10 @@ import (
 
 	"github.com/Fisch-Labs/FishDB/graph"
 	"github.com/Fisch-Labs/FishDB/graph/data"
-	"github.com/Fisch-Labs/common/errorutil"
-	"github.com/Fisch-Labs/ecal/engine"
-	"github.com/Fisch-Labs/ecal/scope"
-	"github.com/Fisch-Labs/ecal/util"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
+	"github.com/Fisch-Labs/Tide/engine"
+	"github.com/Fisch-Labs/Tide/scope"
+	"github.com/Fisch-Labs/Tide/util"
 )
 
 /*

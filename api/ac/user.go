@@ -14,8 +14,8 @@ import (
 	"sort"
 
 	"github.com/Fisch-Labs/FishDB/api"
-	"github.com/Fisch-Labs/common/errorutil"
-	"github.com/Fisch-Labs/common/httputil/access"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
+	"github.com/Fisch-Labs/Toolkit/httputil/access"
 )
 
 /*

@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Fisch-Labs/common/fileutil"
+	"github.com/Fisch-Labs/Toolkit/fileutil"
 )
 
 const DBDIR = "storagemanagertest"

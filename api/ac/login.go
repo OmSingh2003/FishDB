@@ -15,10 +15,10 @@ import (
 	"time"
 
 	"github.com/Fisch-Labs/FishDB/api"
-	"github.com/Fisch-Labs/common/datautil"
-	"github.com/Fisch-Labs/common/errorutil"
-	"github.com/Fisch-Labs/common/httputil"
-	"github.com/Fisch-Labs/common/httputil/auth"
+	"github.com/Fisch-Labs/Toolkit/datautil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
+	"github.com/Fisch-Labs/Toolkit/httputil"
+	"github.com/Fisch-Labs/Toolkit/httputil/auth"
 )
 
 /*

@@ -12,7 +12,7 @@ import (
 	"net/url"
 
 	v1 "github.com/Fisch-Labs/FishDB/api/v1"
-	"github.com/Fisch-Labs/common/stringutil"
+	"github.com/Fisch-Labs/Toolkit/stringutil"
 )
 
 // EQL Console

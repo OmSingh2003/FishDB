@@ -15,8 +15,8 @@ import (
 
 	"github.com/Fisch-Labs/FishDB/graph"
 	"github.com/Fisch-Labs/FishDB/graph/data"
-	"github.com/Fisch-Labs/common/lang/graphql/parser"
-	"github.com/Fisch-Labs/common/stringutil"
+	"github.com/Fisch-Labs/Toolkit/lang/graphql/parser"
+	"github.com/Fisch-Labs/Toolkit/stringutil"
 )
 
 // SelectionSet Runtime

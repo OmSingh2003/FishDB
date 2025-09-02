@@ -23,7 +23,7 @@ import (
 
 	"github.com/Fisch-Labs/FishDB/api/ac"
 	"github.com/Fisch-Labs/FishDB/config"
-	"github.com/Fisch-Labs/common/errorutil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
 )
 
 /*

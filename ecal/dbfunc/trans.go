@@ -12,7 +12,7 @@ import (
 	"strconv"
 
 	"github.com/Fisch-Labs/FishDB/graph"
-	"github.com/Fisch-Labs/ecal/parser"
+	"github.com/Fisch-Labs/Tide/parser"
 )
 
 /*

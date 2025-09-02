@@ -28,9 +28,9 @@ import (
 	"github.com/Fisch-Labs/FishDB/graph"
 	"github.com/Fisch-Labs/FishDB/graph/data"
 	"github.com/Fisch-Labs/FishDB/graph/graphstorage"
-	"github.com/Fisch-Labs/common/errorutil"
-	"github.com/Fisch-Labs/common/fileutil"
-	"github.com/Fisch-Labs/common/httputil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
+	"github.com/Fisch-Labs/Toolkit/fileutil"
+	"github.com/Fisch-Labs/Toolkit/httputil"
 )
 
 const TESTPORT = ":9090"

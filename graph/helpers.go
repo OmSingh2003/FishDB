@@ -18,7 +18,7 @@ import (
 	"github.com/Fisch-Labs/FishDB/graph/util"
 	"github.com/Fisch-Labs/FishDB/hash"
 	"github.com/Fisch-Labs/FishDB/storage"
-	"github.com/Fisch-Labs/common/stringutil"
+	"github.com/Fisch-Labs/Toolkit/stringutil"
 )
 
 // Helper functions for GraphManager

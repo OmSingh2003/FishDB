@@ -18,8 +18,8 @@ import (
 	"github.com/Fisch-Labs/FishDB/storage/file"
 	"github.com/Fisch-Labs/FishDB/storage/slotting/pageview"
 	"github.com/Fisch-Labs/FishDB/storage/util"
-	"github.com/Fisch-Labs/common/lockutil"
-	"github.com/Fisch-Labs/common/testutil"
+	"github.com/Fisch-Labs/Toolkit/lockutil"
+	"github.com/Fisch-Labs/Toolkit/testutil"
 )
 
 func TestDiskStorageManagerLockFilePanic(t *testing.T) {

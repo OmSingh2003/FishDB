@@ -14,8 +14,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/Fisch-Labs/common/errorutil"
-	"github.com/Fisch-Labs/common/stringutil"
+	"github.com/Fisch-Labs/Toolkit/errorutil"
+	"github.com/Fisch-Labs/Toolkit/stringutil"
 )
 
 /*

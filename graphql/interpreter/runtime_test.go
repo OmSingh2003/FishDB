@@ -15,7 +15,7 @@ import (
 	"github.com/Fisch-Labs/FishDB/graph"
 	"github.com/Fisch-Labs/FishDB/graph/data"
 	"github.com/Fisch-Labs/FishDB/graph/graphstorage"
-	"github.com/Fisch-Labs/common/lang/graphql/parser"
+	"github.com/Fisch-Labs/Toolkit/lang/graphql/parser"
 )
 
 func TestNamedQueries(t *testing.T) {

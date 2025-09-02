@@ -18,7 +18,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Fisch-Labs/common/datautil"
+	"github.com/Fisch-Labs/Toolkit/datautil"
 )
 
 /*
