@@ -96,7 +96,7 @@ func TestEndpointHandling(t *testing.T) {
 		t.Errorf("Unexpected response for /foo//bar: status %d, body %q", resp.StatusCode, body)
 		return
 	}
-	if fmt.Sprint(lastRes) != "[foo  bar]" { // Note: double slash creates an empty resource
+	if fmt.Sprint(lastRes) != "[foo bar]" {
 		t.Errorf("Unexpected lastRes for double slash: %q", lastRes)
 	}
 

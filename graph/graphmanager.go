@@ -13,7 +13,6 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/Fisch-Labs/FishDB/graph/data"
 	"github.com/Fisch-Labs/FishDB/graph/graphstorage"
 	"github.com/Fisch-Labs/FishDB/graph/util"
 )
@@ -185,6 +184,22 @@ func (gm *Manager) mainStringList(name string) []string {
 	sort.StringSlice(ret).Sort()
 
 	return ret
+}
+
+var reservedAttrs = map[string]struct{}{
+	"key":               {},
+	"name":              {},
+	"kind":              {},
+	"end1key":           {},
+	"end1kind":          {},
+	"end1role":          {},
+	"end1cascading":     {},
+	"end1cascadinglast": {},
+	"end2key":           {},
+	"end2kind":          {},
+	"end2role":          {},
+	"end2cascading":     {},
+	"end2cascadinglast": {},
 }
 
 /* 
