@@ -303,7 +303,7 @@ fragment TypeRef on __Type {
       },
       "queryType": {
         "name": "Query"
-      },
+      },,
       "subscriptionType": {
         "name": "Subscription"
       }
