@@ -19,3 +19,4 @@
 external_deps/
 .DS_Store
 fishdb.lck
+ssl/
