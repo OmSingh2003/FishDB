@@ -202,8 +202,8 @@ var reservedAttrs = map[string]struct{}{
 	"end2cascadinglast": {},
 }
 
-/* 
-IsValidAttr checks if a string is a valid node attribute. An attribute is considered valid if it is a reserved system keyword 
+/*
+IsValidAttr checks if a string is a valid node attribute. An attribute is considered valid if it is a reserved system keyword
 or if it can be successfully encoded by the names manager.
 */
 func (gm *Manager) IsValidAttr(attr string) bool {
